@@ -19,6 +19,7 @@ package kubelet
 import (
 	"context"
 	"os"
+	"path/filepath"
 	"testing"
 	"time"
 
@@ -82,6 +83,7 @@ func TestRunOnce(t *testing.T) {
 	defer os.RemoveAll(basePath)
 	kb := &Kubelet{
 		rootDirectory:    basePath,
+		podLogsDirectory: filepath.Join(basePath, "pod-logs"),
 		recorder:         &record.FakeRecorder{},
 		cadvisor:         cadvisor,
 		nodeLister:       testNodeLister{},

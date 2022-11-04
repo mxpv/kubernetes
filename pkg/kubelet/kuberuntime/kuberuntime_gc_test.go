@@ -430,6 +430,7 @@ func TestPodLogDirectoryGC(t *testing.T) {
 
 	// pod log directories without corresponding pods should be removed.
 	files := []string{"123", "456", "789", "012", "name_namespace_321", "name_namespace_654"}
+	podLogsRootDirectory := "/var/log/pods"
 	removed := []string{
 		filepath.Join(podLogsRootDirectory, "789"),
 		filepath.Join(podLogsRootDirectory, "012"),

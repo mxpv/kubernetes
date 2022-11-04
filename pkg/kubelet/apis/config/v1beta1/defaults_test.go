@@ -124,7 +124,7 @@ func TestSetDefaultsKubeletConfiguration(t *testing.T) {
 				MemoryThrottlingFactor:        utilpointer.Float64(DefaultMemoryThrottlingFactor),
 				RegisterNode:                  utilpointer.Bool(true),
 				LocalStorageCapacityIsolation: utilpointer.Bool(true),
-				PodLogsRootDirectory:          DefaultPodLogsRootDirectory,
+				PodLogsPath:                   DefaultPodLogsRootDir,
 			},
 		},
 		{
@@ -250,7 +250,7 @@ func TestSetDefaultsKubeletConfiguration(t *testing.T) {
 				EnableDebugFlagsHandler:         utilpointer.Bool(false),
 				SeccompDefault:                  utilpointer.Bool(false),
 				MemoryThrottlingFactor:          utilpointer.Float64(0),
-				PodLogsRootDirectory:            "",
+				PodLogsPath:                     "",
 			},
 			&v1beta1.KubeletConfiguration{
 				EnableServer:       utilpointer.Bool(false),
@@ -349,7 +349,7 @@ func TestSetDefaultsKubeletConfiguration(t *testing.T) {
 				MemoryThrottlingFactor:        utilpointer.Float64(0),
 				RegisterNode:                  utilpointer.Bool(false),
 				LocalStorageCapacityIsolation: utilpointer.Bool(false),
-				PodLogsRootDirectory:          DefaultPodLogsRootDirectory,
+				PodLogsPath:                   DefaultPodLogsRootDir,
 			},
 		},
 		{
@@ -499,7 +499,7 @@ func TestSetDefaultsKubeletConfiguration(t *testing.T) {
 				MemoryThrottlingFactor:        utilpointer.Float64(1),
 				RegisterNode:                  utilpointer.Bool(true),
 				LocalStorageCapacityIsolation: utilpointer.Bool(true),
-				PodLogsRootDirectory:          "/custom/path",
+				PodLogsPath:                   "/custom/path",
 			},
 			&v1beta1.KubeletConfiguration{
 				EnableServer:       utilpointer.Bool(true),
@@ -646,7 +646,7 @@ func TestSetDefaultsKubeletConfiguration(t *testing.T) {
 				MemoryThrottlingFactor:        utilpointer.Float64(1),
 				RegisterNode:                  utilpointer.Bool(true),
 				LocalStorageCapacityIsolation: utilpointer.Bool(true),
-				PodLogsRootDirectory:          "/custom/path",
+				PodLogsPath:                   "/custom/path",
 			},
 		},
 		{
@@ -914,7 +914,7 @@ func TestSetDefaultsKubeletConfiguration(t *testing.T) {
 				MemoryThrottlingFactor:        utilpointer.Float64(DefaultMemoryThrottlingFactor),
 				RegisterNode:                  utilpointer.Bool(true),
 				LocalStorageCapacityIsolation: utilpointer.Bool(true),
-				PodLogsRootDirectory:          DefaultPodLogsRootDirectory,
+				PodLogsPath:                   DefaultPodLogsRootDir,
 			},
 		},
 	}

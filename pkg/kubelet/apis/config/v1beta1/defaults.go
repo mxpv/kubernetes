@@ -36,7 +36,7 @@ const (
 	DefaultIPTablesMasqueradeBit = 14
 	DefaultIPTablesDropBit       = 15
 	DefaultVolumePluginDir       = "/usr/libexec/kubernetes/kubelet-plugins/volume/exec/"
-	DefaultPodLogsRootDirectory  = "/var/log/pods"
+	DefaultPodLogsRootDir        = "/var/log/pods"
 	// See https://github.com/kubernetes/enhancements/tree/master/keps/sig-node/2570-memory-qos
 	DefaultMemoryThrottlingFactor = 0.9
 )
@@ -275,6 +275,6 @@ func SetDefaults_KubeletConfiguration(obj *kubeletconfigv1beta1.KubeletConfigura
 		obj.ContainerRuntimeEndpoint = "unix:///run/containerd/containerd.sock"
 	}
 	if obj.PodLogsPath == "" {
-		obj.PodLogsPath = DefaultPodLogsRootDirectory
+		obj.PodLogsPath = DefaultPodLogsRootDir
 	}
 }

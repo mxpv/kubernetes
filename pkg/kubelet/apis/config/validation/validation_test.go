@@ -565,12 +565,20 @@ func TestValidateKubeletConfiguration(t *testing.T) {
 			errMsg: "invalid configuration: Specifying shutdownGracePeriodByPodPriority requires feature gate GracefulNodeShutdownBasedOnPodPriority",
 		},
 		{
-			name: "invalid podLogsRootDirectory",
-			configure: func(conf *kubeletconfig.KubeletConfiguration) *kubeletconfig.KubeletConfiguration {
-				conf.PodLogsRootDirectory = ""
-				return conf
+			name: "pod logs path must be absolute",
+			configure: func(config *kubeletconfig.KubeletConfiguration) *kubeletconfig.KubeletConfiguration {
+				config.PodLogsPath = "./test"
+				return config
 			},
-			errMsg: "invalid configuration: podLogsRootDirectory was not specified",
+			errMsg: `invalid configuration: pod logs path "./test" must be absolute path`,
+		},
+		{
+			name: "pod logs path must be normalized",
+			configure: func(config *kubeletconfig.KubeletConfiguration) *kubeletconfig.KubeletConfiguration {
+				config.PodLogsPath = "/path/../"
+				return config
+			},
+			errMsg: `invalid configuration: pod logs path "/path/../" must be normalized`,
 		},
 	}
 

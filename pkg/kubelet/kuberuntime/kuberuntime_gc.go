@@ -329,6 +329,7 @@ func (cgc *containerGC) evictSandboxes(ctx context.Context, evictNonDeletedPods 
 // are evictable if there are no corresponding pods.
 func (cgc *containerGC) evictPodLogsDirectories(ctx context.Context, allSourcesReady bool) error {
 	osInterface := cgc.manager.osInterface
+	podLogsRootDirectory := cgc.manager.podLogsRootDirectory
 	if allSourcesReady {
 		// Only remove pod logs directories when all sources are ready.
 		dirs, err := osInterface.ReadDir(podLogsRootDirectory)

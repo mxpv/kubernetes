@@ -18,6 +18,7 @@ package validation
 
 import (
 	"fmt"
+	"path/filepath"
 	"time"
 
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -133,9 +134,6 @@ func ValidateKubeletConfiguration(kc *kubeletconfig.KubeletConfiguration, featur
 	}
 	if kc.TopologyManagerPolicy != kubeletconfig.NoneTopologyManagerPolicy && !localFeatureGate.Enabled(features.TopologyManager) {
 		allErrors = append(allErrors, fmt.Errorf("invalid configuration: topologyManagerPolicy %v requires feature gate TopologyManager", kc.TopologyManagerPolicy))
-	}
-	if kc.PodLogsRootDirectory == "" {
-		allErrors = append(allErrors, fmt.Errorf("invalid configuration: podLogsRootDirectory was not specified"))
 	}
 
 	for _, nodeTaint := range kc.RegisterWithTaints {
@@ -266,6 +264,14 @@ func ValidateKubeletConfiguration(kc *kubeletconfig.KubeletConfiguration, featur
 
 	if kc.ContainerRuntimeEndpoint == "" {
 		allErrors = append(allErrors, fmt.Errorf("invalid configuration: the containerRuntimeEndpoint was not specified or empty"))
+	}
+
+	if !filepath.IsAbs(kc.PodLogsPath) {
+		allErrors = append(allErrors, fmt.Errorf("invalid configuration: pod logs path %q must be absolute path", kc.PodLogsPath))
+	}
+
+	if filepath.Clean(kc.PodLogsPath) != kc.PodLogsPath {
+		allErrors = append(allErrors, fmt.Errorf("invalid configuration: pod logs path %q must be normalized", kc.PodLogsPath))
 	}
 
 	return utilerrors.NewAggregate(allErrors)
