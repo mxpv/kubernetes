@@ -342,7 +342,7 @@ func NewMainKubelet(kubeCfg *kubeletconfiginternal.KubeletConfiguration,
 	cloudProvider string,
 	certDirectory string,
 	rootDirectory string,
-	podLogsRootDirectory string,
+	podLogsDirectory string,
 	imageCredentialProviderConfigFile string,
 	imageCredentialProviderBinDir string,
 	registerNode bool,
@@ -366,7 +366,7 @@ func NewMainKubelet(kubeCfg *kubeletconfiginternal.KubeletConfiguration,
 	if rootDirectory == "" {
 		return nil, fmt.Errorf("invalid root directory %q", rootDirectory)
 	}
-	if podLogsRootDirectory == "" {
+	if podLogsDirectory == "" {
 		return nil, errors.New("pod logs root directory is empty")
 	}
 	if kubeCfg.SyncFrequency.Duration <= 0 {
@@ -524,7 +524,7 @@ func NewMainKubelet(kubeCfg *kubeletconfiginternal.KubeletConfiguration,
 		heartbeatClient:                         kubeDeps.HeartbeatClient,
 		onRepeatedHeartbeatFailure:              kubeDeps.OnHeartbeatFailure,
 		rootDirectory:                           rootDirectory,
-		podLogsDirectory:                        podLogsRootDirectory,
+		podLogsDirectory:                        podLogsDirectory,
 		resyncInterval:                          kubeCfg.SyncFrequency.Duration,
 		sourcesReady:                            config.NewSourcesReady(kubeDeps.PodConfig.SeenAllSources),
 		registerNode:                            registerNode,
@@ -659,7 +659,7 @@ func NewMainKubelet(kubeCfg *kubeletconfiginternal.KubeletConfiguration,
 		klet.readinessManager,
 		klet.startupManager,
 		rootDirectory,
-		podLogsRootDirectory,
+		podLogsDirectory,
 		machineInfo,
 		klet.podWorkers,
 		kubeDeps.OSInterface,
@@ -701,7 +701,7 @@ func NewMainKubelet(kubeCfg *kubeletconfiginternal.KubeletConfiguration,
 	// common provider to get host file system usage associated with a pod managed by kubelet
 	hostStatsProvider := stats.NewHostStatsProvider(kubecontainer.RealOS{}, func(podUID types.UID) string {
 		return getEtcHostsPath(klet.getPodDir(podUID))
-	}, podLogsRootDirectory)
+	}, podLogsDirectory)
 	if kubeDeps.useLegacyCadvisorStats {
 		klet.StatsProvider = stats.NewCadvisorStatsProvider(
 			klet.cadvisor,

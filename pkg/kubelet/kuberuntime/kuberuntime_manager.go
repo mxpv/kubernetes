@@ -165,7 +165,7 @@ type kubeGenericRuntimeManager struct {
 	memoryThrottlingFactor float64
 
 	// Root directory used to store pod logs
-	podLogsRootDirectory string
+	podLogsDirectory string
 }
 
 // KubeGenericRuntime is a interface contains interfaces for container runtime and command.
@@ -182,7 +182,7 @@ func NewKubeGenericRuntimeManager(
 	readinessManager proberesults.Manager,
 	startupManager proberesults.Manager,
 	rootDirectory string,
-	podLogsRootDirectory string,
+	podLogsDirectory string,
 	machineInfo *cadvisorapi.MachineInfo,
 	podStateProvider podStateProvider,
 	osInterface kubecontainer.OSInterface,
@@ -233,7 +233,7 @@ func NewKubeGenericRuntimeManager(
 		memorySwapBehavior:     memorySwapBehavior,
 		getNodeAllocatable:     getNodeAllocatable,
 		memoryThrottlingFactor: memoryThrottlingFactor,
-		podLogsRootDirectory:   podLogsRootDirectory,
+		podLogsDirectory:       podLogsDirectory,
 	}
 
 	typedVersion, err := kubeRuntimeManager.getTypedVersion(ctx)

@@ -37,7 +37,7 @@ import (
 	"k8s.io/utils/pointer"
 )
 
-const testPodLogsRootDirectory = "/var/log/pods"
+const testPodLogsDirectory = "/var/log/pods"
 
 func TestGeneratePodSandboxConfig(t *testing.T) {
 	_, _, m, err := createTestRuntimeManager()
@@ -92,7 +92,7 @@ func TestCreatePodSandbox(t *testing.T) {
 	fakeOS := m.osInterface.(*containertest.FakeOS)
 	fakeOS.MkdirAllFn = func(path string, perm os.FileMode) error {
 		// Check pod logs root directory is created.
-		assert.Equal(t, filepath.Join(testPodLogsRootDirectory, pod.Namespace+"_"+pod.Name+"_12345678"), path)
+		assert.Equal(t, filepath.Join(testPodLogsDirectory, pod.Namespace+"_"+pod.Name+"_12345678"), path)
 		assert.Equal(t, os.FileMode(0755), perm)
 		return nil
 	}

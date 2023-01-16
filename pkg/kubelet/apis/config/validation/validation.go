@@ -132,9 +132,6 @@ func ValidateKubeletConfiguration(kc *kubeletconfig.KubeletConfiguration, featur
 	if kc.ServerTLSBootstrap && !localFeatureGate.Enabled(features.RotateKubeletServerCertificate) {
 		allErrors = append(allErrors, fmt.Errorf("invalid configuration: serverTLSBootstrap %v requires feature gate RotateKubeletServerCertificate", kc.ServerTLSBootstrap))
 	}
-	if kc.TopologyManagerPolicy != kubeletconfig.NoneTopologyManagerPolicy && !localFeatureGate.Enabled(features.TopologyManager) {
-		allErrors = append(allErrors, fmt.Errorf("invalid configuration: topologyManagerPolicy %v requires feature gate TopologyManager", kc.TopologyManagerPolicy))
-	}
 
 	for _, nodeTaint := range kc.RegisterWithTaints {
 		if err := utiltaints.CheckTaintValidation(nodeTaint); err != nil {
@@ -266,12 +263,12 @@ func ValidateKubeletConfiguration(kc *kubeletconfig.KubeletConfiguration, featur
 		allErrors = append(allErrors, fmt.Errorf("invalid configuration: the containerRuntimeEndpoint was not specified or empty"))
 	}
 
-	if !filepath.IsAbs(kc.PodLogsRootDir) {
-		allErrors = append(allErrors, fmt.Errorf("invalid configuration: pod logs path %q must be absolute path", kc.PodLogsRootDir))
+	if !filepath.IsAbs(kc.PodLogsDir) {
+		allErrors = append(allErrors, fmt.Errorf("invalid configuration: pod logs path %q must be absolute path", kc.PodLogsDir))
 	}
 
-	if filepath.Clean(kc.PodLogsRootDir) != kc.PodLogsRootDir {
-		allErrors = append(allErrors, fmt.Errorf("invalid configuration: pod logs path %q must be normalized", kc.PodLogsRootDir))
+	if filepath.Clean(kc.PodLogsDir) != kc.PodLogsDir {
+		allErrors = append(allErrors, fmt.Errorf("invalid configuration: pod logs path %q must be normalized", kc.PodLogsDir))
 	}
 
 	return utilerrors.NewAggregate(allErrors)
