@@ -88,8 +88,8 @@ type KubeletConfiguration struct {
 	// staticPodPath is the path to the directory containing local (static) pods to
 	// run, or the path to a single static pod file.
 	StaticPodPath string
-	// podLogsPath is a custom root directory path kubelet will use to place pod's log files.
-	PodLogsPath string
+	// podLogsRootDir is a custom root directory path kubelet will use to place pod's log files.
+	PodLogsRootDir string
 	// syncFrequency is the max period between synchronizing running
 	// containers and config
 	SyncFrequency metav1.Duration

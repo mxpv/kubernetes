@@ -57360,9 +57360,9 @@ func schema_k8sio_kubelet_config_v1beta1_KubeletConfiguration(ref common.Referen
 							Format:      "",
 						},
 					},
-					"podLogsPath": {
+					"podLogsRootDir": {
 						SchemaProps: spec.SchemaProps{
-							Description: "podLogsPath is a custom root directory path kubelet will use to place pod's log files. Default: \"/var/log/pods\"",
+							Description: "podLogsRootDir is a custom root directory path kubelet will use to place pod's log files. Default: \"/var/log/pods\"",
 							Type:        []string{"string"},
 							Format:      "",
 						},

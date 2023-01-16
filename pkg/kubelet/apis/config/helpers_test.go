@@ -156,7 +156,7 @@ var (
 		"TLSCertFile",
 		"TLSPrivateKeyFile",
 		"ResolverConfig",
-		"PodLogsPath",
+		"PodLogsRootDir",
 	)
 
 	// KubeletConfiguration fields that do not contain file paths.

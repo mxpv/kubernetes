@@ -38,7 +38,7 @@ var (
 		EnforceNodeAllocatable:          enforceNodeAllocatable,
 		SystemReservedCgroup:            "/system.slice",
 		KubeReservedCgroup:              "/kubelet.service",
-		PodLogsPath:                     "/logs",
+		PodLogsRootDir:                  "/logs",
 		SystemCgroups:                   "",
 		CgroupRoot:                      "",
 		EventBurst:                      10,
@@ -567,7 +567,7 @@ func TestValidateKubeletConfiguration(t *testing.T) {
 		{
 			name: "pod logs path must be absolute",
 			configure: func(config *kubeletconfig.KubeletConfiguration) *kubeletconfig.KubeletConfiguration {
-				config.PodLogsPath = "./test"
+				config.PodLogsRootDir = "./test"
 				return config
 			},
 			errMsg: `invalid configuration: pod logs path "./test" must be absolute path`,
@@ -575,7 +575,7 @@ func TestValidateKubeletConfiguration(t *testing.T) {
 		{
 			name: "pod logs path must be normalized",
 			configure: func(config *kubeletconfig.KubeletConfiguration) *kubeletconfig.KubeletConfiguration {
-				config.PodLogsPath = "/path/../"
+				config.PodLogsRootDir = "/path/../"
 				return config
 			},
 			errMsg: `invalid configuration: pod logs path "/path/../" must be normalized`,

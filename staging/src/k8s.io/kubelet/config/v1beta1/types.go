@@ -98,10 +98,10 @@ type KubeletConfiguration struct {
 	// Default: ""
 	// +optional
 	StaticPodPath string `json:"staticPodPath,omitempty"`
-	// podLogsPath is a custom root directory path kubelet will use to place pod's log files.
+	// podLogsRootDir is a custom root directory path kubelet will use to place pod's log files.
 	// Default: "/var/log/pods"
 	// +optional
-	PodLogsPath string `json:"podLogsPath,omitempty"`
+	PodLogsRootDir string `json:"podLogsRootDir,omitempty"`
 	// syncFrequency is the max period between synchronizing running
 	// containers and config.
 	// Default: "1m"

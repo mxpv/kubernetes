@@ -266,12 +266,12 @@ func ValidateKubeletConfiguration(kc *kubeletconfig.KubeletConfiguration, featur
 		allErrors = append(allErrors, fmt.Errorf("invalid configuration: the containerRuntimeEndpoint was not specified or empty"))
 	}
 
-	if !filepath.IsAbs(kc.PodLogsPath) {
-		allErrors = append(allErrors, fmt.Errorf("invalid configuration: pod logs path %q must be absolute path", kc.PodLogsPath))
+	if !filepath.IsAbs(kc.PodLogsRootDir) {
+		allErrors = append(allErrors, fmt.Errorf("invalid configuration: pod logs path %q must be absolute path", kc.PodLogsRootDir))
 	}
 
-	if filepath.Clean(kc.PodLogsPath) != kc.PodLogsPath {
-		allErrors = append(allErrors, fmt.Errorf("invalid configuration: pod logs path %q must be normalized", kc.PodLogsPath))
+	if filepath.Clean(kc.PodLogsRootDir) != kc.PodLogsRootDir {
+		allErrors = append(allErrors, fmt.Errorf("invalid configuration: pod logs path %q must be normalized", kc.PodLogsRootDir))
 	}
 
 	return utilerrors.NewAggregate(allErrors)
