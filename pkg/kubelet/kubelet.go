@@ -1327,7 +1327,7 @@ func (kl *Kubelet) setupDataDirs() error {
 		return fmt.Errorf("error creating root directory: %v", err)
 	}
 	if err := os.MkdirAll(kl.getPodLogsDir(), 0755); err != nil {
-		return fmt.Errorf("error creating pod logs root directory: %v", err)
+		return fmt.Errorf("error creating pod logs root directory %q: %w", kl.getPodLogsDir(), err)
 	}
 	if err := kl.hostutil.MakeRShared(kl.getRootDir()); err != nil {
 		return fmt.Errorf("error configuring root directory: %v", err)
