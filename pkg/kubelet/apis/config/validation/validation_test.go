@@ -580,6 +580,14 @@ func TestValidateKubeletConfiguration(t *testing.T) {
 			},
 			errMsg: `invalid configuration: pod logs path "/path/../" must be normalized`,
 		},
+		{
+			name: "pod logs path is ascii only",
+			configure: func(config *kubeletconfig.KubeletConfiguration) *kubeletconfig.KubeletConfiguration {
+				config.PodLogsDir = "/🧪"
+				return config
+			},
+			errMsg: `invalid configuration: pod logs path "/🧪" mut contains ASCII characters only`,
+		},
 	}
 
 	for _, tc := range cases {
