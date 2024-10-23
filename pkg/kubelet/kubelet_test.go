@@ -40,9 +40,6 @@ import (
 	cadvisorapiv2 "github.com/google/cadvisor/info/v2"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	core "k8s.io/client-go/testing"
-	"k8s.io/mount-utils"
-
 	v1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/api/resource"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -52,6 +49,7 @@ import (
 	"k8s.io/apimachinery/pkg/util/wait"
 	utilfeature "k8s.io/apiserver/pkg/util/feature"
 	"k8s.io/client-go/kubernetes/fake"
+	core "k8s.io/client-go/testing"
 	"k8s.io/client-go/tools/record"
 	"k8s.io/client-go/util/flowcontrol"
 	featuregatetesting "k8s.io/component-base/featuregate/testing"
@@ -351,7 +349,7 @@ func newTestKubeletWithImageList(
 	kubelet.admitHandlers.AddPodAdmitHandler(evictionAdmitHandler)
 
 	// setup shutdown manager
-	shutdownManager, shutdownAdmitHandler := nodeshutdown.NewManager(&nodeshutdown.Config{
+	shutdownManager := nodeshutdown.NewManager(&nodeshutdown.Config{
 		Logger:                          logger,
 		ProbeManager:                    kubelet.probeManager,
 		Recorder:                        fakeRecorder,
@@ -363,7 +361,7 @@ func newTestKubeletWithImageList(
 		ShutdownGracePeriodCriticalPods: 0,
 	})
 	kubelet.shutdownManager = shutdownManager
-	kubelet.admitHandlers.AddPodAdmitHandler(shutdownAdmitHandler)
+	kubelet.admitHandlers.AddPodAdmitHandler(shutdownManager)
 
 	// Add this as cleanup predicate pod admitter
 	kubelet.admitHandlers.AddPodAdmitHandler(lifecycle.NewPredicateAdmitHandler(kubelet.getNodeAnyWay, lifecycle.NewAdmissionFailureHandlerStub(), kubelet.containerManager.UpdatePluginResources))

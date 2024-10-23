@@ -40,9 +40,8 @@ import (
 	semconv "go.opentelemetry.io/otel/semconv/v1.12.0"
 	"go.opentelemetry.io/otel/trace"
 	"k8s.io/client-go/informers"
-	"k8s.io/mount-utils"
-
 	utilfs "k8s.io/kubernetes/pkg/util/filesystem"
+	"k8s.io/mount-utils"
 	netutils "k8s.io/utils/net"
 
 	inuserns "github.com/moby/sys/userns"
@@ -929,7 +928,7 @@ func NewMainKubelet(kubeCfg *kubeletconfiginternal.KubeletConfiguration,
 		util.SetNodeOwnerFunc(klet.heartbeatClient, string(klet.nodeName)))
 
 	// setup node shutdown manager
-	shutdownManager, shutdownAdmitHandler := nodeshutdown.NewManager(&nodeshutdown.Config{
+	shutdownManager := nodeshutdown.NewManager(&nodeshutdown.Config{
 		Logger:                           logger,
 		ProbeManager:                     klet.probeManager,
 		VolumeManager:                    klet.volumeManager,
@@ -948,7 +947,7 @@ func NewMainKubelet(kubeCfg *kubeletconfiginternal.KubeletConfiguration,
 	if err != nil {
 		return nil, fmt.Errorf("create user namespace manager: %w", err)
 	}
-	klet.admitHandlers.AddPodAdmitHandler(shutdownAdmitHandler)
+	klet.admitHandlers.AddPodAdmitHandler(shutdownManager)
 
 	// Finally, put the most recent version of the config on the Kubelet, so
 	// people can see how it was configured.

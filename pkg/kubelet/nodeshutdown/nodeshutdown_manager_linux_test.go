@@ -352,7 +352,7 @@ func TestManager(t *testing.T) {
 			fakeRecorder := &record.FakeRecorder{}
 			fakeVolumeManager := volumemanager.NewFakeVolumeManager([]v1.UniqueVolumeName{}, 0, nil)
 			nodeRef := &v1.ObjectReference{Kind: "Node", Name: "test", UID: types.UID("test"), Namespace: ""}
-			manager, _ := NewManager(&Config{
+			manager := NewManager(&Config{
 				Logger:                          logger,
 				ProbeManager:                    proberManager,
 				VolumeManager:                   fakeVolumeManager,
@@ -459,7 +459,7 @@ func TestFeatureEnabled(t *testing.T) {
 			fakeVolumeManager := volumemanager.NewFakeVolumeManager([]v1.UniqueVolumeName{}, 0, nil)
 			nodeRef := &v1.ObjectReference{Kind: "Node", Name: "test", UID: types.UID("test"), Namespace: ""}
 
-			manager, _ := NewManager(&Config{
+			manager := NewManager(&Config{
 				Logger:                          logger,
 				ProbeManager:                    proberManager,
 				VolumeManager:                   fakeVolumeManager,
@@ -517,7 +517,7 @@ func TestRestart(t *testing.T) {
 	fakeRecorder := &record.FakeRecorder{}
 	fakeVolumeManager := volumemanager.NewFakeVolumeManager([]v1.UniqueVolumeName{}, 0, nil)
 	nodeRef := &v1.ObjectReference{Kind: "Node", Name: "test", UID: types.UID("test"), Namespace: ""}
-	manager, _ := NewManager(&Config{
+	manager := NewManager(&Config{
 		Logger:                          logger,
 		ProbeManager:                    proberManager,
 		VolumeManager:                   fakeVolumeManager,

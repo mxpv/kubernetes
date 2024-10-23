@@ -40,6 +40,8 @@ import (
 
 // Manager interface provides methods for Kubelet to manage node shutdown.
 type Manager interface {
+	lifecycle.PodAdmitHandler
+
 	Admit(attrs *lifecycle.PodAdmitAttributes) lifecycle.PodAdmitResult
 	Start() error
 	ShutdownStatus() error
